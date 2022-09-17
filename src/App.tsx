@@ -17,15 +17,31 @@ const App: FC = () => {
   //個別のTodo
   const [todoTitle, setTodoTitle] = useState("");
 
+  //個別のtodoのid
+  const [todoId, setTodoId] = useState(todos.length + 1);
+
+  //タイトル欄の入力値が変化する度にstateを更新
   const handleAddFormChanges = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTodoTitle(e.target.value);
+  };
+
+  //ボタンが押されると新しいtodoをTodoリストに追加する
+  const handleAddTodo = () => {
+    setTodos([...todos, { id: todoId, title: todoTitle }]);
+    setTodoId(todoId + 1);
+    setTodoTitle("");
   };
 
   return (
     <>
       <div>
-        <input type="text" value={todoTitle} onChange={handleAddFormChanges} />
-        <button>追加</button>
+        <input
+          type="text"
+          placeholder="タイトル"
+          value={todoTitle}
+          onChange={handleAddFormChanges}
+        />
+        <button onClick={handleAddTodo}>追加</button>
       </div>
       <ul>
         {todos.map((todo) => (
