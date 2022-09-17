@@ -1,12 +1,12 @@
 import ReactDOM from "react-dom";
-import React, { useState } from "react";
+import React, { useState, FC } from "react";
 
 type Todos = {
   id: number;
   title: string;
 };
 
-const App = () => {
+const App: FC = () => {
   //Todoリスト全体
   const [todos, setTodos] = useState<Todos[]>([
     { id: 1, title: "todo1" },
@@ -17,11 +17,15 @@ const App = () => {
   //個別のTodo
   const [todoTitle, setTodoTitle] = useState("");
 
+  const handleAddFormChanges = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setTodoTitle(e.target.value);
+  };
+
   return (
     <>
       <div>
-        <input type="text" />
-        <button>作成</button>
+        <input type="text" value={todoTitle} onChange={handleAddFormChanges} />
+        <button>追加</button>
       </div>
       <ul>
         {todos.map((todo) => (
