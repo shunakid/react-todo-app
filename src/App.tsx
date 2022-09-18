@@ -4,14 +4,15 @@ import React, { useState, FC } from "react";
 type Todos = {
   id: number;
   title: string;
+  status: string;
 };
 
 const App: FC = () => {
   //Todoリスト全体
   const [todos, setTodos] = useState<Todos[]>([
-    { id: 1, title: "todo1" },
-    { id: 2, title: "todo2" },
-    { id: 3, title: "todo3" },
+    { id: 1, title: "todo1", status: "done" },
+    { id: 2, title: "todo2", status: "notStarted" },
+    { id: 3, title: "todo3", status: "inProgress" },
   ]);
 
   //個別のTodo
@@ -27,7 +28,10 @@ const App: FC = () => {
 
   //追加ボタンが押されると新しいtodoをTodoリストに追加する
   const handleAddTodo = () => {
-    setTodos([...todos, { id: todoId, title: todoTitle }]);
+    setTodos([
+      ...todos,
+      { id: todoId, title: todoTitle, status: "notStarted" },
+    ]);
     setTodoId(todoId + 1);
     setTodoTitle("");
   };
@@ -51,6 +55,11 @@ const App: FC = () => {
         {todos.map((todo) => (
           <li key={todo.id}>
             <span>{todo.title}</span>
+            <select value={todo.status}>
+              <option value="notStarted">未着手</option>
+              <option value="inProgress">作業中</option>
+              <option value="done">完了</option>
+            </select>
             <button onClick={() => handleDeleteTodo(todo)}>削除</button>
           </li>
         ))}
