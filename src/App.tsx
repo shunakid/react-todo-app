@@ -25,13 +25,17 @@ const App: FC = () => {
     setTodoTitle(e.target.value);
   };
 
-  //ボタンが押されると新しいtodoをTodoリストに追加する
+  //追加ボタンが押されると新しいtodoをTodoリストに追加する
   const handleAddTodo = () => {
     setTodos([...todos, { id: todoId, title: todoTitle }]);
     setTodoId(todoId + 1);
     setTodoTitle("");
   };
 
+  //削除対象以外のtodoを要素としてもつ配列を作成
+  const handleDeleteTodo = (targetTodo: Todos) => {
+    setTodos(todos.filter((todo) => todo !== targetTodo));
+  };
   return (
     <>
       <div>
@@ -47,6 +51,7 @@ const App: FC = () => {
         {todos.map((todo) => (
           <li key={todo.id}>
             <span>{todo.title}</span>
+            <button onClick={() => handleDeleteTodo(todo)}>削除</button>
           </li>
         ))}
       </ul>
