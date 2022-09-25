@@ -94,6 +94,7 @@ const App: FC = () => {
     setTodos(newArray);
   };
 
+  //フィルターの絞り込み処理
   useEffect(() => {
     const filteringTodos = () => {
       switch (filter) {
