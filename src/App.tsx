@@ -30,6 +30,12 @@ const App: FC = () => {
   //新しいタイトル
   const [newTitle, setNewTitle] = useState("");
 
+  //フィルター
+  const [filter, setFilter] = useState("notStarted");
+
+  //フィルターの選択値
+  const [filteredTodos, setFilteredTodos] = useState([]);
+
   //タイトルの入力値が変化する度にstateを更新
   const handleAddFormChanges = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTodoTitle(e.target.value);
@@ -110,23 +116,29 @@ const App: FC = () => {
             onChange={handleAddFormChanges}
           />
           <button onClick={handleAddTodo}>追加</button>
+          <select value={filter} onChange={(e) => setFilter(e.target.value)}>
+            <option value="all">すべて</option>
+            <option value="notStarted">未着手</option>
+            <option value="inProgress">作業中</option>
+            <option value="done">完了</option>
+          </select>
         </div>
       )}
 
       <ul>
-        {todos.map((todo) => (
-          <li key={todo.id}>
-            <span>{todo.title}</span>
+        {todos.map((todos) => (
+          <li key={todos.id}>
+            <span>{todos.title}</span>
             <select
-              value={todo.status}
-              onChange={(e) => handleStatusChange(todo, e)}
+              value={todos.status}
+              onChange={(e) => handleStatusChange(todos, e)}
             >
               <option value="notStarted">未着手</option>
               <option value="inProgress">作業中</option>
               <option value="done">完了</option>
             </select>
-            <button onClick={() => handleOpenEditForm(todo)}>編集</button>
-            <button onClick={() => handleDeleteTodo(todo)}>削除</button>
+            <button onClick={() => handleOpenEditForm(todos)}>編集</button>
+            <button onClick={() => handleDeleteTodo(todos)}>削除</button>
           </li>
         ))}
       </ul>
